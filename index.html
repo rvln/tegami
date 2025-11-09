@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bunga Cinta 🌹</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffe6f2, #fff0f6);
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+            padding-top: 50px;
+            /* 🌷 geser konten agak ke bawah */
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #d63384;
+            text-shadow: 1px 1px #fff;
+            margin-bottom: 95px;
+            font-size: 1.8rem;
+            z-index: 2;
+        }
+
+        #flower-container {
+            position: relative;
+            width: 150px;
+            height: 300px;
+            margin: 30px auto 15px auto;
+            /* 🌷 bunga turun lebih ke bawah */
+            transform: scale(1.3);
+            transform-origin: bottom center;
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
+
+        .part {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .part.visible {
+            opacity: 1;
+        }
+
+        #next {
+            padding: 10px 25px;
+            border: none;
+            background-color: #77565f;
+            color: white;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+            z-index: 2;
+        }
+
+        #next:hover {
+            background-color: #ff3385;
+            transform: scale(1.05);
+        }
+
+        #message {
+            margin-top: 10px;
+            color: #b3005c;
+            font-size: 1.05rem;
+            line-height: 1.5em;
+            max-width: 90%;
+            z-index: 2;
+        }
+
+        /* 🌸 Efek kelopak bunga jatuh penuh layar */
+        .petal {
+            position: fixed;
+            top: -10vh;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            opacity: 0.9;
+            animation: fall 6s linear forwards;
+            z-index: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateX(0) translateY(-10vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            25% {
+                transform: translateX(20px) translateY(25vh) rotate(90deg);
+            }
+
+            50% {
+                transform: translateX(-20px) translateY(50vh) rotate(180deg);
+            }
+
+            75% {
+                transform: translateX(15px) translateY(75vh) rotate(270deg);
+            }
+
+            100% {
+                transform: translateX(-15px) translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 🌼 Responsif */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 40px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            #flower-container {
+                width: 120px;
+                height: 250px;
+                transform: scale(1.1);
+                margin-top: 25px;
+            }
+
+            #next {
+                font-size: 0.95rem;
+                padding: 9px 22px;
+            }
+
+            #message {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 30px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            #flower-container {
+                width: 100px;
+                height: 200px;
+                transform: scale(1.0);
+                margin-top: 20px;
+            }
+
+            #next {
+                font-size: 0.9rem;
+                padding: 8px 18px;
+            }
+
+            #message {
+                font-size: 0.9rem;
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bunga untuk Kamu! 🌷</h1>
+
+    <div id="flower-container">
+        <img src="/2.png" class="part">
+        <img src="/3.png" class="part">
+        <img src="/4.png" class="part">
+        <img src="/5.png" class="part">
+        <img src="/6.png" class="part">
+        <img src="/7.png" class="part">
+        <img src="/8.png" class="part">
+        <img src="/9.png" class="part">
+    </div>
+
+    <button id="next">Tekan ini yaa 🌱</button>
+    <div id="message"></div>
+
+    <script>
+        const parts = document.querySelectorAll('.part');
+        const btn = document.getElementById('next');
+        const message = document.getElementById('message');
+        let index = 0;
+
+        const buttonMessages = [
+            "Nah udah mulai tumbuh nih 🌱",
+            "Sekarang daun pertamanya muncul 🍃",
+            "Daun berikutnya juga ikut tumbuh 🌿",
+            "Nah, tambah lagi daunnya 🌿",
+            "Wah, makin indah aja 💚",
+            "Kuncup bunganya mulai terlihat 🌸",
+            "Sebentar lagi mekar sepenuhnya 🌺",
+            "Bunganya mulai merekah 🌷",
+            "Indah banget... seperti kamu 🌹"
+        ];
+
+        btn.addEventListener('click', () => {
+            if (index < parts.length) {
+                parts[index].classList.add('visible');
+                message.textContent = buttonMessages[index] || "";
+                index++;
+                btn.textContent = index < parts.length ? "Lanjutkan 🌼" : "Selesai 🌹";
+                if (index === parts.length) {
+                    message.textContent = "Yeey! Bunganya telah mekar sepenuhnya 🌹✨";
+                    btn.disabled = true;
+                    btn.style.backgroundColor = "#999";
+                }
+            }
+        });
+
+        // 🌸 Efek kelopak jatuh (full screen)
+        const petalImages = ["/10.png", "/11.png", "/12.png", "/13.png", "/14.png"];
+
+        function createPetal() {
+            const petal = document.createElement("img");
+            petal.src = petalImages[Math.floor(Math.random() * petalImages.length)];
+            petal.classList.add("petal");
+
+            petal.style.left = Math.random() * 100 + "vw";
+            petal.style.animationDuration = 5 + Math.random() * 5 + "s";
+            petal.style.animationDelay = Math.random() * 2 + "s";
+            petal.style.width = 20 + Math.random() * 30 + "px";
+            petal.style.opacity = 0.6 + Math.random() * 0.4;
+            document.body.appendChild(petal);
+
+            setTimeout(() => petal.remove(), 12000);
+        }
+
+        setInterval(createPetal, 400);
+    </script>
+</body>
+
+</html>
